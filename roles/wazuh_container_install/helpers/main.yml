@@ -1,4 +1,0 @@
-- name: create_certificates
-  shell:
-    cmd: "docker-compose -f generate-indexer-certs.yml run --rm generator"
-    chdir: /tmp/checkout/single-node/

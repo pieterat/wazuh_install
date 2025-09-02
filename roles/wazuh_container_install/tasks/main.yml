@@ -19,7 +19,11 @@
     repo: 'https://github.com/wazuh/wazuh-docker.git'
     dest: /tmp/checkout
     version: v4.12.0
-    notify: create_certificates
+
+- name: create_certificates
+  shell:
+    cmd: "docker-compose -f generate-indexer-certs.yml run --rm generator"
+    chdir: /tmp/checkout/single-node/
 
 - name: Compose Wazuh
   shell:
