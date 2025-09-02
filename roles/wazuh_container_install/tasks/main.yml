@@ -1,0 +1,27 @@
+- name: install dependencies for Wazuh
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  loop:
+    - git
+    - docker-compose
+
+- name: change map count
+  sysctl:
+    name: vm.max_map_count
+    value: '262144'
+    state: present
+    reload: yes
+
+- name: download Wasuh from git
+  git:
+    repo: 'https://github.com/wazuh/wazuh-docker.git'
+    dest: /tmp/checkout
+    version: v4.12.0
+    notify: create_certificates
+
+- name: Compose Wazuh
+  shell:
+    cmd: "docker-compose up -d"
+    chdir: /tmp/checkout/single-node/

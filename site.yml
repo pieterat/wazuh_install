@@ -8,6 +8,7 @@
     tags: always
     apt:
       update_cache: yes
+      upgrade: dist
     changed_when: false
     when: ansible_distribution == "Ubuntu"
 
@@ -15,3 +16,13 @@
   become: true
   roles:
     - base
+
+- hosts: docker
+  become: true
+  roles:
+    - docker_install
+
+- hosts: wazuh
+  become: true
+  roles:
+    - wazuh_container_install
